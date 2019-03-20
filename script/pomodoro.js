@@ -12,7 +12,7 @@ function timeLeft(interval) {
   const seconds = interval % 60;
   const combiner = `${minutes < 10 ? "0" : ""}${Math.floor(minutes)}:${
     seconds < 10 ? "0" : ""
-  }${Math.floor(seconds)}`;
+    }${Math.floor(seconds)}`;
 
   display.textContent = combiner; // Inserts result into main clock
   header.textContent = combiner + status; // Inserts result into browser tab header and ads status
@@ -66,7 +66,7 @@ function time(interval, breakDuration) {
 function breakTime(pauseTime, workTime) {
   status = " Break!"; // Change tab header to time + "Break"
   startBtn.style.visibility = "hidden"; // Start or pause button invisible during break time
-  breakIn.style.visibility = "hidden";
+  breakIn.textContent = "Break ends in:"; // Displays h4 above counter
   clearInterval(breakDown); // Clears any unfinished break intervals
   const then2 = Date.now() + pauseTime * 1000;
   overlaySingle.style.visibility = "visible"; // Shows pop up with activity
@@ -150,7 +150,7 @@ let minutes = Math.floor(work / 60); // For display purposes this breaks interva
 const seconds = work % 60;
 let combiner = `${minutes < 10 ? "0" : ""}${Math.floor(minutes)}:${
   seconds < 10 ? "0" : ""
-}${Math.floor(seconds)}`;
+  }${Math.floor(seconds)}`;
 display.textContent = combiner;
 
 // Function fired after click on start button
@@ -158,6 +158,8 @@ start.addEventListener("click", e => {
   e.preventDefault();
   // Check if Custom timer has correct inputs
   if (document.body.classList.contains("custom")) {
+    workInput.setAttribute("disabled", "");
+    breakInput.setAttribute("disabled", "");
     if (work === 0) {
       alert(
         "Thats not what we call work enthusiasm. \n\nWork input has invalid value"
@@ -230,8 +232,22 @@ restart.addEventListener("click", e => {
     minutes = work / 60;
     combiner = `${minutes < 10 ? "0" : ""}${Math.floor(minutes)}:${
       seconds < 10 ? "0" : ""
-    }${Math.floor(seconds)}`;
+      }${Math.floor(seconds)}`;
+    workInput.removeAttribute("disabled");
+    breakInput.removeAttribute("disabled");
+    if (overlaySingle.childElementCount > 4) {
+      overlaySingle.removeChild(overlaySingle.children[3]);
+      overlaySingle.removeChild(overlaySingle.children[2]);
+      overlaySingle.removeChild(overlaySingle.children[1]);
+      overlaySingle.removeChild(overlaySingle.children[0]);
+    }
+  } else {
+    overlaySingle.removeChild(overlaySingle.children[3]);
+    overlaySingle.removeChild(overlaySingle.children[2]);
+    overlaySingle.removeChild(overlaySingle.children[1]);
+    overlaySingle.removeChild(overlaySingle.children[0]);
   }
+  header.textContent = combiner;
   breakIn.style.visibility = "hidden";
   start.textContent = "Lets get things done!";
   startBtn.style.visibility = "visible";
@@ -239,6 +255,7 @@ restart.addEventListener("click", e => {
   clearInterval(breakDown);
   display.textContent = combiner;
   hook = 0;
+  overlaySingle.style.visibility = "hidden"; // Shows pop up with activity
 });
 
 // Pop up window button "Done" - if clicked close pop up

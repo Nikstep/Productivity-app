@@ -537,16 +537,16 @@ footer{
     color: #00b709;
     background: #F3F3F3;
     border: 3px solid #00b709;
-    -webkit-transition: 0.3s all linear;
-    transition: 0.3s all linear;
+    -webkit-transition: 0.1s all linear;
+    transition: 0.1s all linear;
 }
 
 #change:hover{
     color: #E74C3C;
     background: #F3F3F3;
     border: 3px solid #E74C3C;
-    -webkit-transition: 0.3s all linear;
-    transition: 0.3s all linear;
+    -webkit-transition: 0.1s all linear;
+    transition: 0.1s all linear;
 }
 
 
